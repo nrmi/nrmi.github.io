@@ -1,0 +1,29 @@
+language: node_js
+node_js: stable
+
+# S: Build Lifecycle
+install:
+  - npm install
+
+
+#before_script:
+ # - npm install -g gulp
+
+script:
+  - hexo g
+
+after_script:
+  - cd ./public
+  - git init
+  - git config user.name "${GU_UNAME}"
+  - git config user.email "${GU_UEMAIL}"
+  - git add .
+  - git commit -m "create docs"
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
+
+branches:
+  only:
+    - blog
+env:
+ global:
+   - GH_REF: github.com/nrmi/nrmi.github.io
