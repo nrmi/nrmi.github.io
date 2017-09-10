@@ -7,6 +7,7 @@ install:
   - npm install -g hexo
   - npm install -g hexo-cli
   - npm install hexo-deployer-git --save
+  - npm install --save hexo-renderer-jade hexo-generator-archive
   - npm install
 
 
@@ -18,7 +19,6 @@ before_script:
 
   - git clone https://github.com/Ben02/hexo-theme-Anatole.git themes/anatole
   - cp -rf _config.sample.yml themes/anatole/_config.yml
-  - npm install --save hexo-renderer-jade hexo-generator-archive
 
 script:
 
