@@ -1,32 +1,35 @@
+
 language: node_js
 node_js: stable
 
-# S: Build Lifecycle
 install:
+  - export TZ='Asia/Beijing'
+  - npm install -g hexo
+  - npm install -g hexo-cli
   - npm install
 
 
 before_script:
+  - git config --global user.name "wangxia"
+  - git config --global user.email "1371945558@qq.com"
+
+  - sed -i'' "s~githuboimal~https://${GH_TOKEN}:x-oauth-basic@github.com/nrmi/nrmi.github.io~" _config.yml
+
   - git clone https://github.com/Ben02/hexo-theme-Anatole.git themes/anatole
   - cp -rf _config.sample.yml themes/anatole/_config.yml
   - npm install --save hexo-renderer-jade hexo-generator-archive
 
 script:
+
   - hexo clean
   - hexo g
 
-after_script:
-  - cd public
-  - git init
-  - git config user.name "${GU_UNAME}"
-  - git config user.email "${GU_UEMAIL}"
-  - git add .
-  - git commit -m "create docs"
-  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
+after_success:
+
+ - hexo deploy
 
 branches:
   only:
     - blog
 env:
  global:
-   - GH_REF: github.com/nrmi/nrmi.github.io
